@@ -1,11 +1,8 @@
 <Project Sdk="Dalamud.NET.Sdk/12.0.2">
 
     <PropertyGroup>
-        <LangVersion>12</LangVersion>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <AssemblyVersion>2.4.2.0</AssemblyVersion>
         <AssemblyName>EngageTimer</AssemblyName>
-        <Nullable>enable</Nullable>
         <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
     </PropertyGroup>
 
@@ -38,67 +35,10 @@
             <LastGenOutput>Resources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
-
-    <PropertyGroup>
-        <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
-        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))'">
-        <DalamudLibPath>$(DALAMUD_HOME)/</DalamudLibPath>
-        <DalamudLibPath Condition="$([MSBuild]::IsOSPlatform('Windows'))">$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
-        <DalamudLibPath Condition="$([MSBuild]::IsOSPlatform('Linux'))">$(HOME)/.xlcore/dalamud/Hooks/dev/</DalamudLibPath>
-        <DalamudLibPath Condition="$([MSBuild]::IsOSPlatform('OSX'))">$(HOME)/Library/Application Support/XIV on Mac/dalamud/Hooks/dev/</DalamudLibPath>
-        <DalamudLibPath Condition="$(DALAMUD_HOME) != ''">$(DALAMUD_HOME)/</DalamudLibPath>
-    </PropertyGroup>
-
     <ItemGroup>
-        <Reference Include="Dalamud, Culture=neutral, PublicKeyToken=null">
-            <HintPath>$(DalamudLibPath)Dalamud.dll</HintPath>
-            <Private>False</Private>
-        </Reference>
         <Reference Include="StbiSharp, Culture=neutral, PublicKeyToken=null">
             <HintPath>$(DalamudLibPath)StbiSharp.dll</HintPath>
             <Private>false</Private>
         </Reference>
     </ItemGroup>
-
-    <Target Name="PackagePlugin" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
-        <DalamudPackager ProjectDir="$(ProjectDir)" OutputPath="$(OutputPath)" AssemblyName="$(AssemblyName)"/>
-    </Target>
-
-    <ProjectExtensions>
-        <DalamudPlugin>
-            <ApiLevel>7</ApiLevel>
-            <Author>Xorus</Author>
-            <Name>EngageTimer</Name>
-            <Punchline>Complete combat countdown, pull timer and OBS overlay</Punchline>
-            <Description>Finally, display all the numbers when starting a countdown!
-                Comes with an accurate pull timer that starts when you or any of your party members enter combat.
-
-                Features :
-                - Big countdown that displays all the numbers
-                - Customizable big-number textures (default, yellow, WoW style or custom files)
-                - Display combat time in the Server Info Bar, and/or a floating window
-                - OBS browser-source compatible page with countdown and current combat duration
-
-                Why the OBS thing ? Well, it can be useful if you want a big stylized stopwatch in your recordings.
-                See repository for more info.
-
-                Feel free so send me feedback, bugs and potential improvements!
-            </Description>
-            <IconUrl>https://raw.githubusercontent.com/xorus/EngageTimer/main/images/icon.png</IconUrl>
-            <Tags>
-                <Tag>Countdown</Tag>
-                <Tag>Pull Timer</Tag>
-                <Tag>Stopwatch</Tag>
-                <Tag>OBS</Tag>
-                <Tag>Overlay</Tag>
-                <Tag>Streaming</Tag>
-                <Tag>Combat</Tag>
-            </Tags>
-            <Hidden>False</Hidden>
-            <CategoryTags>jobs</CategoryTags>
-        </DalamudPlugin>
-    </ProjectExtensions>
 </Project>
